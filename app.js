@@ -63,14 +63,19 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
-app.options('*', cors()); 
+// app.options('*', cors()); 
 
-app.all('/*', function (req, res, next) {
-  // http://localhost:3000
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With,     Content-Type");
-    next();
+// app.all('/*', function (req, res, next) {
+//   // http://localhost:3000
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With,     Content-Type");
+//     next();
+// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 // app.use(session({
 //   secret: 'a4f8071f-c873-4447-8ee2',
