@@ -73,7 +73,7 @@ passport.deserializeUser(function(user, done) {
 //     next();
 // });
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "https://reactreduxchatapp.herokuapp.com");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
