@@ -8,7 +8,12 @@ var passport = require('passport');
 var logger = require('morgan'),
 cors = require('cors'),
 mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/reactApp");
+var dbUrl = 'mongodb://ds143892.mlab.com:43892/ritestchattingapp';
+var dbOptions = {
+  user: 'prabhat',
+  pass: 'prabhat@1'
+}   
+mongoose.connect(dbUrl, dbOptions);
 require('./models/user.model');
 require('./models/books.model');
 require('./models/passport.model');
