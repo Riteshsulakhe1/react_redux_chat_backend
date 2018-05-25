@@ -5,6 +5,8 @@ var User = mongoose.model('User');
 var passport = require('passport');
 var Passport = mongoose.model('Passport');
 var fs = require('fs');
+var ObjectId = require('mongodb').ObjectID;
+
 
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -167,18 +169,18 @@ router.getSessionUser = function(req, res){
   }
 };
 
-// router.updateUser = function(req, res) {
-//   if(req.body._id) {
-//     User.update({_id: ObjectId(req.body._id)}, {$set:req.body}, function(err, updatedUser) {
-//       if(err) {
-//         var errMsg = new Error('Fail to update user');
-//         res.json(err);
-//       } else {
-//         res.json(updatedUser);
-//       }
-//     });
-//   }
-// }
+router.updateUser = function(req, res) {
+  if(req.body._id) {
+    User.update({_id: ObjectId(req.body._id)}, {$set:req.body}, function(err, updatedUser) {
+      if(err) {
+        var errMsg = new Error('Fail to update user');
+        res.json(err);
+      } else {
+        res.json(req.body);
+      }
+    });
+  }
+}
 
 
 module.exports = router;

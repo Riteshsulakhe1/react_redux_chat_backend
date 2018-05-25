@@ -72,25 +72,25 @@ passport.deserializeUser(function(user, done) {
 //     res.header("Access-Control-Allow-Headers", "X-Requested-With,     Content-Type");
 //     next();
 // });
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "https://reactreduxchatapp.herokuapp.com");
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://reactreduxchatapp.herokuapp.com");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+  var allowedOrigins = ['https://reactreduxchatapp.herokuapp.com', 'http://localhost:3000'];
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  return next();
 });
-// app.use(session({
-//   secret: 'a4f8071f-c873-4447-8ee2',
-//   cookie: { maxAge: 2628000000 },
-//   store: new (session)({
-//       storage: 'mongodb',
-//       instance: mongoose, // optional 
-//       host: 'localhost', // optional 
-//       port: 27017, // optional 
-//       db: 'reactApp', // optional 
-//       collection: 'sessions', // optional 
-//       expire: 86400 // optional 
-//   })
-// }));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -102,7 +102,8 @@ app.get('/credentials', usersRouter.getFirebaseConfig);
 app.get('/userList',usersRouter.getAllUsers);
 app.post('/saveUser', usersRouter.registerUser);
 app.post('/login', usersRouter.login);
-app.get('/getLoggedInUser', usersRouter.getSessionUser);
+app.get('/loggedInUser', usersRouter.getSessionUser)
+app.put('/loggedInUser',usersRouter.updateUser);
 app.post('/GoogleUser', usersRouter.registerGoogleUser)
 app.get('/GoogleUser', usersRouter.getGoogleUser);
 //Books api route

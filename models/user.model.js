@@ -34,6 +34,10 @@ var UserSchema = new Schema({
         type: String,
         default: ''
     },
+    firebaseId: {
+        type: String,
+        default: ''
+    },
     updated: {
         type: Date
     },
